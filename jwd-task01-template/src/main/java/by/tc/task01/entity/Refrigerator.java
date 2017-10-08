@@ -8,8 +8,6 @@ public class Refrigerator extends Appliance{
     private int height;
     private int width;
 
-
-
     public int getPowerConsumption() {
         return powerConsumption;
     }

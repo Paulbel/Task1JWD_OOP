@@ -9,7 +9,6 @@ public class VacuumCleaner extends Appliance{
 	private int cleaningWidth;
 
 
-
     public int getPowerConsumption() {
         return powerConsumption;
     }

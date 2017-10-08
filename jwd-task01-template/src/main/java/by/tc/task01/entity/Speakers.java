@@ -6,6 +6,7 @@ public class Speakers extends Appliance{
 	private String frequencyRange;
     private int cordLength;
 
+
     public int getPowerConsumption() {
         return powerConsumption;
     }

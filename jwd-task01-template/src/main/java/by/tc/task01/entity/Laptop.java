@@ -3,11 +3,14 @@ package by.tc.task01.entity;
 public class Laptop extends Appliance{
 	private int batteryCapacity;
 	private String os;
-	private int memoryCapacity;
+	private int memoryRomCapacity;
 	private int systemMemoryCapacity;
-	private double cpuFrequence;
-	private double displaySize;
+	private double cpu;
+	private double displayInchs;
 
+	
+	
+	
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
@@ -25,11 +28,11 @@ public class Laptop extends Appliance{
     }
 
     public int getMemoryCapacity() {
-        return memoryCapacity;
+        return memoryRomCapacity;
     }
 
-    public void setMemoryCapacity(int memoryCapacity) {
-        this.memoryCapacity = memoryCapacity;
+    public void setMemoryCapacity(int memoryRomCapacity) {
+        this.memoryRomCapacity = memoryRomCapacity;
     }
 
     public int getSystemMemoryCapacity() {
@@ -40,31 +43,31 @@ public class Laptop extends Appliance{
         this.systemMemoryCapacity = systemMemoryCapacity;
     }
 
-    public double getCpuFrequence() {
-        return cpuFrequence;
+    public double getcpu() {
+        return cpu;
     }
 
-    public void setCpuFrequence(double cpuFrequence) {
-        this.cpuFrequence = cpuFrequence;
+    public void setcpu(double cpu) {
+        this.cpu = cpu;
     }
 
-    public double getDisplaySize() {
-        return displaySize;
+    public double getdisplayInchs() {
+        return displayInchs;
     }
 
-    public void setDisplaySize(double displaySize) {
-        this.displaySize = displaySize;
+    public void setdisplayInchs(double displayInchs) {
+        this.displayInchs = displayInchs;
     }
 
-    @java.lang.Override
-    public java.lang.String toString() {
+    @Override
+    public String toString() {
         return "Laptop{" +
                 "batteryCapacity=" + batteryCapacity +
                 ", os='" + os + '\'' +
-                ", memoryCapacity=" + memoryCapacity +
+                ", memoryCapacity=" + memoryRomCapacity +
                 ", systemMemoryCapacity=" + systemMemoryCapacity +
-                ", cpuFrequence=" + cpuFrequence +
-                ", displaySize=" + displaySize +
+                ", cpu=" + cpu +
+                ", displayInchs=" + displayInchs +
                 '}';
     }
 }

@@ -2,11 +2,12 @@ package by.tc.task01.entity;
 
 public class TabletPC extends Appliance{
 	private int batteryCapacity;
-	private int displaySize;
-	private int memoryRomCapacity;
+	private int displayInches;
+	private int memoryRom;
 	private int flashMemoryCapacity;
 	private String color;
 
+    
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
@@ -15,20 +16,20 @@ public class TabletPC extends Appliance{
         this.batteryCapacity = batteryCapacity;
     }
 
-    public int getDisplaySize() {
-        return displaySize;
+    public int getdisplayInches() {
+        return displayInches;
     }
 
-    public void setDisplaySize(int displaySize) {
-        this.displaySize = displaySize;
+    public void setdisplayInches(int displayInches) {
+        this.displayInches = displayInches;
     }
 
-    public int getMemoryRomCapacity() {
-        return memoryRomCapacity;
+    public int getmemoryRom() {
+        return memoryRom;
     }
 
-    public void setMemoryRomCapacity(int memoryRomCapacity) {
-        this.memoryRomCapacity = memoryRomCapacity;
+    public void setmemoryRom(int memoryRom) {
+        this.memoryRom = memoryRom;
     }
 
     public int getFlashMemoryCapacity() {
@@ -51,8 +52,8 @@ public class TabletPC extends Appliance{
     public java.lang.String toString() {
         return "TabletPC{" +
                 "batteryCapacity=" + batteryCapacity +
-                ", displaySize=" + displaySize +
-                ", memoryRomCapacity=" + memoryRomCapacity +
+                ", displayInches=" + displayInches +
+                ", memoryRom=" + memoryRom +
                 ", flashMemoryCapacity=" + flashMemoryCapacity +
                 ", color='" + color + '\'' +
                 '}';
