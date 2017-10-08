@@ -7,67 +7,26 @@ import by.tc.task01.entity.criteria.Criteria;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ApplianceDAOImpl implements ApplianceDAO {
     private String FILE_PATH = "jwd-task01-template/src/main/resources/appliances_db.txt";
+    private final String patternForFields = "(\\,|\\:)\\s(\\w+)\\=" +
+            "(((\\d+\\.*\\d*)+\\-*(\\d+\\.*\\d*)*)|((\\w+)(\\-*(\\w*))*))";
 
     @Override
     public <E> Appliance find(Criteria<E> criteria) {
-        String className = "Oven";
-        E key = null;
-        BufferedReader br = null;
-        FileReader fr = null;
-        Pattern pattern = Pattern.compile(className + "\\s*");
-        Pattern pattern1 = Pattern.compile("(\\,|\\:)\\s(\\w+)\\=(((\\d+\\.*\\d*)+\\-*(\\d+\\.*\\d*)*)|((\\w+)(\\-*(\\w*))*))");
-        try {
-            fr = new FileReader(FILE_PATH);
-            br = new BufferedReader(fr);
-            String sCurrentLine;
-            boolean mayMatch = true;
-            boolean alreadyFound = false;
-            while ((sCurrentLine = br.readLine()) != null && !alreadyFound) {//проверяем слудующую строку
-                Matcher applianceMatcher = pattern.matcher(sCurrentLine);
-                if (applianceMatcher.find()) {
-                    applianceMatcher.usePattern(pattern1);
-                    while (applianceMatcher.find() && mayMatch) {//Проверяем следующий критерий
-                        for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
-                            key = entry.getKey();
-                            Object value = entry.getValue();
-                            if (key.toString().equals(applianceMatcher.group(2))) {
-                                if (value.toString().equals(applianceMatcher.group(3))) {
-                                    System.out.println("VALUE" + value);
-                                } else {
-                                    mayMatch = false;
-                                    break;
-                                }
-                            }
-                        }
-                        alreadyFound = true;
-                    }
-                }
-            }
-
-            if(alreadyFound){
-                System.out.println(sCurrentLine);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null)
-                    br.close();
-                if (fr != null)
-                    fr.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        String entry = findEntryInFile(criteria);
+        if (entry != null) {
+            return createApplianceByEntry(entry);
         }
-/*        String s = "BATTERY_CAPACITY";
+        return null;
+    }
+
+    private Appliance createApplianceByEntry(String entry) {
+        /*String s = "BATTERY_CAPACITY";
         s = s.toLowerCase();
         StringBuilder str = new StringBuilder(s);
         int index = 0;
@@ -110,19 +69,62 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         }*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         return null;
+    }
+
+    private <E> String findEntryInFile(Criteria<E> criteria) {
+        String entryFromFile = null;
+        String className = "Oven";
+        E key = null;
+        BufferedReader br = null;
+        FileReader fr = null;
+        Pattern pattern = Pattern.compile(className + "\\s*");
+        Pattern pattern1 = Pattern.compile(patternForFields);
+        try {
+            fr = new FileReader(FILE_PATH);
+            br = new BufferedReader(fr);
+
+            boolean mayMatch = true;
+            boolean alreadyFound = false;
+            while (!alreadyFound && ((entryFromFile = br.readLine()) != null)) {//проверяем слудующую строку
+                Matcher applianceMatcher = pattern.matcher(entryFromFile);
+                if (applianceMatcher.find()) {
+                    applianceMatcher.usePattern(pattern1);
+                    while (mayMatch && applianceMatcher.find()) {//Проверяем следующий критерий
+                        for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
+                            key = entry.getKey();
+                            Object value = entry.getValue();
+                            if (key.toString().equals(applianceMatcher.group(2))) {
+                                if (value.toString().equals(applianceMatcher.group(3))) {
+                                    alreadyFound = true;
+                                    System.out.println("VALUE" + value);
+                                } else {
+                                    mayMatch = false;
+                                    alreadyFound = false;
+                                    break;
+
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+                if (fr != null)
+                    fr.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        System.out.println(entryFromFile);
+        return entryFromFile;
     }
 }
 
