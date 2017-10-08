@@ -15,6 +15,15 @@ public class Criteria<E> {
 		return criteria;
 	}
 
+	private String applianceType;
+
+	public String getApplianceType() {
+		return applianceType;
+	}
+
+	public void setApplianceType(String applianceType) {
+		this.applianceType = applianceType;
+	}
 	// you may add your own code here
 
 }

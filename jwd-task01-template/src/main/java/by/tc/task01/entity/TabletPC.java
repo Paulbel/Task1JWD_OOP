@@ -20,6 +20,22 @@ public class TabletPC extends Appliance{
         return displayInches;
     }
 
+    public int getDisplayInches() {
+        return displayInches;
+    }
+
+    public void setDisplayInches(int displayInches) {
+        this.displayInches = displayInches;
+    }
+
+    public int getMemoryRom() {
+        return memoryRom;
+    }
+
+    public void setMemoryRom(int memoryRom) {
+        this.memoryRom = memoryRom;
+    }
+
     public void setdisplayInches(int displayInches) {
         this.displayInches = displayInches;
     }

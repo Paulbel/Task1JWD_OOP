@@ -41,6 +41,10 @@ public class Oven extends Appliance{
         this.depth = depth;
     }
 
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
     public double getHeight() {
         return height;
     }
@@ -49,11 +53,19 @@ public class Oven extends Appliance{
         this.height = height;
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public double getWidth() {
         return width;
     }
 
     public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setWidth(int width) {
         this.width = width;
     }
 

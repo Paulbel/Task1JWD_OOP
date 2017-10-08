@@ -7,106 +7,138 @@ import by.tc.task01.entity.criteria.Criteria;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ApplianceDAOImpl implements ApplianceDAO {
     private String FILE_PATH = "jwd-task01-template/src/main/resources/appliances_db.txt";
-    private final String patternForFields = "(\\,|\\:)\\s(\\w+)\\=" +
-            "(((\\d+\\.*\\d*)+\\-*(\\d+\\.*\\d*)*)|((\\w+)(\\-*(\\w*))*))";
+
+    private Pattern fieldNameValuePattern;
+    private Pattern typeNamePattern;
+    private int fieldNameInPatternIndex;
+    private int valueInPatternIndex;
+
+    public ApplianceDAOImpl() {
+        fieldNameValuePattern = Pattern.compile("(\\w+)=(\\w+(\\-\\w+)*(\\.\\d+)*)");
+        fieldNameInPatternIndex = 1;
+        valueInPatternIndex = 2;
+                //Pattern.compile("(\\,|\\:)\\s(\\w+)\\=(((\\d+\\.*\\d*)+\\-*(\\d+\\.*\\d*)*)|((\\w+)(\\-*(\\w*))*))");
+    }
 
     @Override
     public <E> Appliance find(Criteria<E> criteria) {
         String entry = findEntryInFile(criteria);
         if (entry != null) {
-            return createApplianceByEntry(entry);
+            return createApplianceByEntry(entry, criteria.getApplianceType());
         }
         return null;
     }
 
-    private Appliance createApplianceByEntry(String entry) {
-        /*String s = "BATTERY_CAPACITY";
-        s = s.toLowerCase();
-        StringBuilder str = new StringBuilder(s);
-        int index = 0;
-        while (true){
-            if(index!=-1){
-                if (index!=0) {
-                    str.deleteCharAt(index);
-                }
-                String sp = new String(str.substring(index,index+1));
-                str.deleteCharAt(index);
-                sp = sp.toUpperCase();
-                str.insert(index,sp);
-                str.trimToSize();
-                index = str.indexOf("_");
-            }else {
-                break;
-            }
-
-        }
-
-        str.insert(0,"set");
-        String name = str.toString();
-        System.out.println(str);
+    private Appliance createApplianceByEntry(String entry, String applianceType) {
+        Object obj = null;
         try {
-
-            Object obj = new Laptop();
-            Class c = obj.getClass();
-            Class[] paramTypes = new Class[]{int.class};
-            Method method = c.getMethod(name, paramTypes);
-
-            method.invoke(obj, 2);
-            System.out.println(obj.toString());
-        }
-        catch (NoSuchMethodException e){
-
+            obj = Class.forName("by.tc.task01.entity." + applianceType).newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
+        Class c = obj.getClass();
+        Matcher fieldMatcher = typeNamePattern.matcher(entry);
+        if (fieldMatcher.find()) {
+            fieldMatcher.usePattern(fieldNameValuePattern);
+            while (fieldMatcher.find()) {//Проверяем следующий критерий
+                String s = fieldMatcher.group(fieldNameInPatternIndex);
+                s = s.toLowerCase();
+                StringBuilder str = new StringBuilder(s);
+                int index = 0;
+                while (true) {
+                    if (index != -1) {
+                        if (index != 0) {
+                            str.deleteCharAt(index);
+                        }
+                        String sp = new String(str.substring(index, index + 1));
+                        str.deleteCharAt(index);
+                        sp = sp.toUpperCase();
+                        str.insert(index, sp);
+                        str.trimToSize();
+                        index = str.indexOf("_");
+                    } else {
+                        break;
+                    }
+                }
+                str.insert(0, "set");
+                String name = str.toString();
+                try {
+                    String value = fieldMatcher.group(valueInPatternIndex);
+                    Pattern doubleTypePattern = Pattern.compile("\\d+\\.+\\d+");
+                    Pattern stringTypePattern = Pattern.compile("((\\d+\\.*\\d*)\\-+(\\d+\\.*\\d*))|([a-zA-Z]+(\\-*[a-zA-Z])*)");
+                    Matcher matcher = doubleTypePattern.matcher(value);
+                    System.out.println(value);
+                    if (matcher.matches()) {
+                        Class[] paramTypes = new Class[]{double.class};
+                        Method method = c.getMethod(name, paramTypes);
+                        Object[] object = new Object[]{Double.valueOf(value)};
+                        method.invoke(obj, object);
+                        continue;
+                    }
+                    matcher.usePattern(stringTypePattern);
+                    if (matcher.matches()) {
+                        Class[] paramTypes = new Class[]{String.class};
+                        Method method = c.getMethod(name, paramTypes);
+                        Object[] object = new Object[]{value};
+                        method.invoke(obj, object);
+                        continue;
+                    }
+                    Class[] paramTypes = new Class[]{int.class};
+                    Method method = c.getMethod(name, paramTypes);
+                    Object[] object = new Object[]{Integer.valueOf(value)};
+                    method.invoke(obj, object);
+                } catch (NoSuchMethodException e) {
 
-
-        return null;
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return (Appliance) obj;
     }
 
     private <E> String findEntryInFile(Criteria<E> criteria) {
         String entryFromFile = null;
-        String className = "Oven";
-        E key = null;
         BufferedReader br = null;
         FileReader fr = null;
-        Pattern pattern = Pattern.compile(className + "\\s*");
-        Pattern pattern1 = Pattern.compile(patternForFields);
+        typeNamePattern = Pattern.compile(criteria.getApplianceType() + "\\s*\\:");
         try {
             fr = new FileReader(FILE_PATH);
             br = new BufferedReader(fr);
-
             boolean mayMatch = true;
             boolean alreadyFound = false;
             while (!alreadyFound && ((entryFromFile = br.readLine()) != null)) {//проверяем слудующую строку
-                Matcher applianceMatcher = pattern.matcher(entryFromFile);
+                Matcher applianceMatcher = typeNamePattern.matcher(entryFromFile);
+                mayMatch = true;
                 if (applianceMatcher.find()) {
-                    applianceMatcher.usePattern(pattern1);
+                    applianceMatcher.usePattern(fieldNameValuePattern);
                     while (mayMatch && applianceMatcher.find()) {//Проверяем следующий критерий
                         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
-                            key = entry.getKey();
+                            E key = entry.getKey();
                             Object value = entry.getValue();
-                            if (key.toString().equals(applianceMatcher.group(2))) {
-                                if (value.toString().equals(applianceMatcher.group(3))) {
+                            if (key.toString().equals(applianceMatcher.group(fieldNameInPatternIndex))) {
+                                if (value.toString().equals(applianceMatcher.group(valueInPatternIndex))) {
                                     alreadyFound = true;
-                                    System.out.println("VALUE" + value);
                                 } else {
                                     mayMatch = false;
                                     alreadyFound = false;
                                     break;
-
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -123,7 +155,6 @@ public class ApplianceDAOImpl implements ApplianceDAO {
                 ex.printStackTrace();
             }
         }
-        System.out.println(entryFromFile);
         return entryFromFile;
     }
 }

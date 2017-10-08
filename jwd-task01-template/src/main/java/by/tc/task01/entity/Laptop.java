@@ -47,7 +47,11 @@ public class Laptop extends Appliance{
         return cpu;
     }
 
-    public void setcpu(double cpu) {
+    public void setCpu(double cpu) {
+        this.cpu = cpu;
+    }
+
+    public void setCpu(int cpu){
         this.cpu = cpu;
     }
 
@@ -56,6 +60,30 @@ public class Laptop extends Appliance{
     }
 
     public void setdisplayInchs(double displayInchs) {
+        this.displayInchs = displayInchs;
+    }
+
+    public int getMemoryRomCapacity() {
+        return memoryRomCapacity;
+    }
+
+    public void setMemoryRomCapacity(int memoryRomCapacity) {
+        this.memoryRomCapacity = memoryRomCapacity;
+    }
+
+    public double getCpu() {
+        return cpu;
+    }
+
+    public double getDisplayInchs() {
+        return displayInchs;
+    }
+
+    public void setDisplayInchs(int displayInchs) {
+        this.displayInchs = displayInchs;
+    }
+
+    public void setDisplayInchs(double displayInchs) {
         this.displayInchs = displayInchs;
     }
 
