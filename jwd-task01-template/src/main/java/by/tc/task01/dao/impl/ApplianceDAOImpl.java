@@ -79,25 +79,27 @@ public class ApplianceDAOImpl implements ApplianceDAO {
                     Pattern doubleTypePattern = Pattern.compile("\\d+\\.+\\d+");
                     Pattern stringTypePattern = Pattern.compile("((\\d+\\.*\\d*)\\-+(\\d+\\.*\\d*))|([a-zA-Z]+(\\-*[a-zA-Z])*)");
                     Matcher matcher = doubleTypePattern.matcher(value);
-                    System.out.println(value);
+                    Class[] paramTypes;
+                    Method method;
+                    Object[] object;
                     if (matcher.matches()) {
-                        Class[] paramTypes = new Class[]{double.class};
-                        Method method = c.getMethod(name, paramTypes);
-                        Object[] object = new Object[]{Double.valueOf(value)};
+                        paramTypes = new Class[]{double.class};
+                        method = c.getMethod(name, paramTypes);
+                        object = new Object[]{Double.valueOf(value)};
                         method.invoke(obj, object);
                         continue;
                     }
                     matcher.usePattern(stringTypePattern);
                     if (matcher.matches()) {
-                        Class[] paramTypes = new Class[]{String.class};
-                        Method method = c.getMethod(name, paramTypes);
-                        Object[] object = new Object[]{value};
+                        paramTypes = new Class[]{String.class};
+                        method = c.getMethod(name, paramTypes);
+                        object = new Object[]{value};
                         method.invoke(obj, object);
                         continue;
                     }
-                    Class[] paramTypes = new Class[]{int.class};
-                    Method method = c.getMethod(name, paramTypes);
-                    Object[] object = new Object[]{Integer.valueOf(value)};
+                    paramTypes = new Class[]{int.class};
+                    method = c.getMethod(name, paramTypes);
+                    object = new Object[]{Integer.valueOf(value)};
                     method.invoke(obj, object);
                 } catch (NoSuchMethodException e) {
 

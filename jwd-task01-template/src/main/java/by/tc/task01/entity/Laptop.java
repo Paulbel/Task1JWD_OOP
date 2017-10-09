@@ -3,14 +3,11 @@ package by.tc.task01.entity;
 public class Laptop extends Appliance{
 	private int batteryCapacity;
 	private String os;
-	private int memoryRomCapacity;
-	private int systemMemoryCapacity;
+	private int memoryRom;
+	private int systemMemory;
 	private double cpu;
 	private double displayInchs;
 
-	
-	
-	
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
@@ -28,19 +25,19 @@ public class Laptop extends Appliance{
     }
 
     public int getMemoryCapacity() {
-        return memoryRomCapacity;
+        return memoryRom;
     }
 
     public void setMemoryCapacity(int memoryRomCapacity) {
-        this.memoryRomCapacity = memoryRomCapacity;
+        this.memoryRom = memoryRomCapacity;
     }
 
     public int getSystemMemoryCapacity() {
-        return systemMemoryCapacity;
+        return systemMemory;
     }
 
     public void setSystemMemoryCapacity(int systemMemoryCapacity) {
-        this.systemMemoryCapacity = systemMemoryCapacity;
+        this.systemMemory = systemMemoryCapacity;
     }
 
     public double getcpu() {
@@ -63,12 +60,12 @@ public class Laptop extends Appliance{
         this.displayInchs = displayInchs;
     }
 
-    public int getMemoryRomCapacity() {
-        return memoryRomCapacity;
+    public int getMemoryRom() {
+        return memoryRom;
     }
 
-    public void setMemoryRomCapacity(int memoryRomCapacity) {
-        this.memoryRomCapacity = memoryRomCapacity;
+    public void setMemoryRom(int memoryRom) {
+        this.memoryRom = memoryRom;
     }
 
     public double getCpu() {
@@ -92,8 +89,8 @@ public class Laptop extends Appliance{
         return "Laptop{" +
                 "batteryCapacity=" + batteryCapacity +
                 ", os='" + os + '\'' +
-                ", memoryCapacity=" + memoryRomCapacity +
-                ", systemMemoryCapacity=" + systemMemoryCapacity +
+                ", memoryCapacity=" + memoryRom +
+                ", systemMemoryCapacity=" + systemMemory +
                 ", cpu=" + cpu +
                 ", displayInchs=" + displayInchs +
                 '}';
