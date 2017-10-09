@@ -1,12 +1,12 @@
 package by.tc.task01.entity;
 
-public class Laptop extends Appliance{
-	private int batteryCapacity;
-	private String os;
-	private int memoryRom;
-	private int systemMemory;
-	private double cpu;
-	private double displayInchs;
+public class Laptop extends Appliance {
+    private int batteryCapacity;
+    private String os;
+    private int memoryRom;
+    private int systemMemory;
+    private double cpu;
+    private double displayInchs;
 
     public int getBatteryCapacity() {
         return batteryCapacity;
@@ -48,7 +48,7 @@ public class Laptop extends Appliance{
         this.cpu = cpu;
     }
 
-    public void setCpu(int cpu){
+    public void setCpu(int cpu) {
         this.cpu = cpu;
     }
 

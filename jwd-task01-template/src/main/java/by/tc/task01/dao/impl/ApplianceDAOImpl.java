@@ -25,7 +25,6 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         fieldNameValuePattern = Pattern.compile("(\\w+)=(\\w+(\\-\\w+)*(\\.\\d+)*)");
         fieldNameInPatternIndex = 1;
         valueInPatternIndex = 2;
-                //Pattern.compile("(\\,|\\:)\\s(\\w+)\\=(((\\d+\\.*\\d*)+\\-*(\\d+\\.*\\d*)*)|((\\w+)(\\-*(\\w*))*))");
     }
 
     @Override

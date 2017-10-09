@@ -1,13 +1,12 @@
 package by.tc.task01.entity;
 
-public class Oven extends Appliance{
+public class Oven extends Appliance {
     private int powerConsumption;
     private int weight;
     private int capacity;
     private double depth;
     private double height;
     private double width;
-
 
     public double getDepth() {
         return depth;
