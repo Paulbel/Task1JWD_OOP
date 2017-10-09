@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 public class ApplianceDAOImpl implements ApplianceDAO {
     private String FILE_PATH = "jwd-task01-template/src/main/resources/appliances_db.txt";
-
     private Pattern fieldNameValuePattern;
     private Pattern typeNamePattern;
     private int fieldNameInPatternIndex;

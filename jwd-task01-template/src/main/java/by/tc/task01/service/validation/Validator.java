@@ -16,7 +16,7 @@ public class Validator {
 
     static {
         validateStringPattern = Pattern.compile(".+");
-        validateIntPattern = Pattern.compile("\\d+");
+        validateIntPattern = Pattern.compile("\\d+(\\.0)?");
         validateDoublePattern = Pattern.compile("\\d+(\\.\\d+)?");
         patterns = new HashMap<String, HashMap>();
         HashMap<SearchCriteria.Oven, Pattern> ovenPatternHashMap = new HashMap<SearchCriteria.Oven, Pattern>();
