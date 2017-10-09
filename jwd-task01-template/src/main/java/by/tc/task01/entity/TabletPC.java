@@ -1,5 +1,8 @@
 package by.tc.task01.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TabletPC extends Appliance {
     private int batteryCapacity;
     private int displayInches;
@@ -7,17 +10,12 @@ public class TabletPC extends Appliance {
     private int flashMemoryCapacity;
     private String color;
 
-
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
 
     public void setBatteryCapacity(int batteryCapacity) {
         this.batteryCapacity = batteryCapacity;
-    }
-
-    public int getdisplayInches() {
-        return displayInches;
     }
 
     public int getDisplayInches() {
@@ -33,18 +31,6 @@ public class TabletPC extends Appliance {
     }
 
     public void setMemoryRom(int memoryRom) {
-        this.memoryRom = memoryRom;
-    }
-
-    public void setdisplayInches(int displayInches) {
-        this.displayInches = displayInches;
-    }
-
-    public int getmemoryRom() {
-        return memoryRom;
-    }
-
-    public void setmemoryRom(int memoryRom) {
         this.memoryRom = memoryRom;
     }
 
@@ -73,5 +59,23 @@ public class TabletPC extends Appliance {
                 ", flashMemoryCapacity=" + flashMemoryCapacity +
                 ", color='" + color + '\'' +
                 '}';
+    }
+
+    @Override
+    public void setAllFields(HashMap<String, String> map) {
+        for (Map.Entry <String,String>entry:map.entrySet()){
+            String fieldInFileName =entry.getKey();
+            if (fieldInFileName.equals("BATTERY_CAPACITY")){
+                this.setBatteryCapacity(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("DISPLAY_INCHES")){
+                this.setDisplayInches(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("MEMORY_ROM")){
+                this.setMemoryRom(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("FLASH_MEMORY_CAPACITY")){
+                this.setFlashMemoryCapacity(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("COLOR")){
+                this.setColor(entry.getValue());
+            }
+        }
     }
 }

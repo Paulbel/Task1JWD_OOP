@@ -20,7 +20,7 @@ public class Main {
 
         Criteria<Oven> criteriaOven = new Criteria<Oven>();
         criteriaOven.setApplianceType("Oven");
-        criteriaOven.add(Oven.CAPACITY, 3);
+        criteriaOven.add(Oven.CAPACITY, 32);
 
         appliance = service.find(criteriaOven);
 
@@ -52,7 +52,7 @@ public class Main {
         //////////////////////////////////////////////////////////////////
 
         criteriaTabletPC = new Criteria<TabletPC>();
-        criteriaTabletPC.setApplianceType("TabletPC");
+        criteriaTabletPC.setApplianceType(null);
         criteriaTabletPC.add(TabletPC.MEMORY_ROM, 4);
 
         appliance = service.find(criteriaTabletPC);

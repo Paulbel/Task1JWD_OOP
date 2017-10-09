@@ -1,5 +1,8 @@
 package by.tc.task01.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Oven extends Appliance {
     private int powerConsumption;
     private int weight;
@@ -40,9 +43,6 @@ public class Oven extends Appliance {
         this.depth = depth;
     }
 
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
 
     public double getHeight() {
         return height;
@@ -52,9 +52,7 @@ public class Oven extends Appliance {
         this.height = height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+
 
     public double getWidth() {
         return width;
@@ -64,9 +62,6 @@ public class Oven extends Appliance {
         this.width = width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
 
     @java.lang.Override
     public java.lang.String toString() {
@@ -78,6 +73,28 @@ public class Oven extends Appliance {
                 ", height=" + height +
                 ", width=" + width +
                 '}';
+    }
+
+
+
+    @Override
+    public void setAllFields(HashMap<String, String> map) {
+        for (Map.Entry <String,String>entry:map.entrySet()){
+            String fieldInFileName =entry.getKey();
+            if (fieldInFileName.equals("POWER_CONSUMPTION")){
+                this.setPowerConsumption(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("WEIGHT")){
+                this.setWeight(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("CAPACITY")){
+                this.setCapacity(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("DEPTH")){
+                this.setDepth(Double.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("HEIGHT")){
+                this.setHeight(Double.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("WIDTH")){
+                this.setWidth(Double.valueOf(entry.getValue()));
+            }
+        }
     }
 }
 

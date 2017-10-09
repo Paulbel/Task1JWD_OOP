@@ -13,7 +13,6 @@ public class Validator {
     private static Pattern validateDoublePattern;
     private static Pattern validateIntPattern;
     private static HashMap<String, HashMap> patterns;
-
     static {
         validateStringPattern = Pattern.compile(".+");
         validateIntPattern = Pattern.compile("\\d+(\\.0)?");
@@ -67,15 +66,19 @@ public class Validator {
     }
 
     public static <E> boolean criteriaValidator(Criteria<E> criteria) {
-        String applianceType = criteria.getApplianceType();
-        HashMap<Criteria, Pattern> patternMap = patterns.get(applianceType);
-        for (Map.Entry entry : criteria.getCriteria().entrySet()) {
-            Pattern pattern = patternMap.get(entry.getKey());
-            Matcher matcher = pattern.matcher(String.valueOf(entry.getValue()));
-            if (!matcher.matches()) {
-                System.out.println("BAD PARAMETER!");
-                return false;
+        try {
+            String applianceType = criteria.getApplianceType();
+            HashMap<Criteria, Pattern> patternMap = patterns.get(applianceType);
+            for (Map.Entry entry : criteria.getCriteria().entrySet()) {
+                Pattern pattern = patternMap.get(entry.getKey());
+                Matcher matcher = pattern.matcher(String.valueOf(entry.getValue()));
+                if (!matcher.matches()) {
+                    return false;
+                }
             }
+        }
+        catch (NullPointerException ex){
+            return false;
         }
         return true;
     }

@@ -1,6 +1,8 @@
 package by.tc.task01.dao.impl;
 
 import by.tc.task01.dao.ApplianceDAO;
+import by.tc.task01.dao.applianceCreateCommand.ApplianceCreateDirector;
+import by.tc.task01.dao.applianceCreateCommand.CreateCommand;
 import by.tc.task01.entity.Appliance;
 import by.tc.task01.entity.criteria.Criteria;
 
@@ -9,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,79 +39,21 @@ public class ApplianceDAOImpl implements ApplianceDAO {
     }
 
     private Appliance createApplianceByEntry(String entry, String applianceType) {
-        Object obj = null;
-        try {
-            obj = Class.forName("by.tc.task01.entity." + applianceType).newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Class c = obj.getClass();
+        ApplianceCreateDirector createDirector = new ApplianceCreateDirector();
+        CreateCommand command = createDirector.getCommand(applianceType);
+        Appliance appliance = command.createAppliance();
+        HashMap<String,String> fieldAndValueMap = new HashMap<String, String>();
         Matcher fieldMatcher = typeNamePattern.matcher(entry);
         if (fieldMatcher.find()) {
             fieldMatcher.usePattern(fieldNameValuePattern);
             while (fieldMatcher.find()) {//Проверяем следующий критерий
-                String s = fieldMatcher.group(fieldNameInPatternIndex);
-                s = s.toLowerCase();
-                StringBuilder str = new StringBuilder(s);
-                int index = 0;
-                while (true) {
-                    if (index != -1) {
-                        if (index != 0) {
-                            str.deleteCharAt(index);
-                        }
-                        String sp = new String(str.substring(index, index + 1));
-                        str.deleteCharAt(index);
-                        sp = sp.toUpperCase();
-                        str.insert(index, sp);
-                        str.trimToSize();
-                        index = str.indexOf("_");
-                    } else {
-                        break;
-                    }
-                }
-                str.insert(0, "set");
-                String name = str.toString();
-                try {
-                    String value = fieldMatcher.group(valueInPatternIndex);
-                    Pattern doubleTypePattern = Pattern.compile("\\d+\\.+\\d+");
-                    Pattern stringTypePattern = Pattern.compile("((\\d+\\.*\\d*)\\-+(\\d+\\.*\\d*))|([a-zA-Z]+(\\-*[a-zA-Z])*)");
-                    Matcher matcher = doubleTypePattern.matcher(value);
-                    Class[] paramTypes;
-                    Method method;
-                    Object[] object;
-                    if (matcher.matches()) {
-                        paramTypes = new Class[]{double.class};
-                        method = c.getMethod(name, paramTypes);
-                        object = new Object[]{Double.valueOf(value)};
-                        method.invoke(obj, object);
-                        continue;
-                    }
-                    matcher.usePattern(stringTypePattern);
-                    if (matcher.matches()) {
-                        paramTypes = new Class[]{String.class};
-                        method = c.getMethod(name, paramTypes);
-                        object = new Object[]{value};
-                        method.invoke(obj, object);
-                        continue;
-                    }
-                    paramTypes = new Class[]{int.class};
-                    method = c.getMethod(name, paramTypes);
-                    object = new Object[]{Integer.valueOf(value)};
-                    method.invoke(obj, object);
-                } catch (NoSuchMethodException e) {
-
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    e.printStackTrace();
-                }
+                String fieldName = fieldMatcher.group(fieldNameInPatternIndex);
+                String value = fieldMatcher.group(valueInPatternIndex);
+                fieldAndValueMap.put(fieldName, value);
             }
         }
-        return (Appliance) obj;
+        appliance.setAllFields(fieldAndValueMap);
+        return appliance;
     }
 
     private <E> String findEntryInFile(Criteria<E> criteria) {

@@ -1,5 +1,8 @@
 package by.tc.task01.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class VacuumCleaner extends Appliance {
     private int powerConsumption;
     private String filterType;
@@ -69,5 +72,23 @@ public class VacuumCleaner extends Appliance {
                 '}';
     }
 
-
+    @Override
+    public void setAllFields(HashMap<String, String> map) {
+        for (Map.Entry <String,String>entry:map.entrySet()){
+            String fieldInFileName =entry.getKey();
+            if (fieldInFileName.equals("POWER_CONSUMPTION")){
+                this.setPowerConsumption(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("FILTER_TYPE")){
+                this.setFilterType(entry.getValue());
+            }else if(fieldInFileName.equals("BAG_TYPE")){
+                this.setBagType(entry.getValue());
+            }else if(fieldInFileName.equals("WAND_TYPE")){
+                this.setWandType(entry.getValue());
+            }else if(fieldInFileName.equals("MOTOR_SPEED_REGULATION")){
+                this.setMotorSpeedRegulation(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("CLEANING_WIDTH")){
+                this.setCleaningWidth(Integer.valueOf(entry.getValue()));
+            }
+        }
+    }
 }

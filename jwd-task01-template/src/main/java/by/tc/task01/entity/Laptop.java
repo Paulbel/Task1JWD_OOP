@@ -1,12 +1,15 @@
 package by.tc.task01.entity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Laptop extends Appliance {
     private int batteryCapacity;
     private String os;
     private int memoryRom;
     private int systemMemory;
     private double cpu;
-    private double displayInchs;
+    private int displayInchs;
 
     public int getBatteryCapacity() {
         return batteryCapacity;
@@ -56,10 +59,6 @@ public class Laptop extends Appliance {
         return displayInchs;
     }
 
-    public void setdisplayInchs(double displayInchs) {
-        this.displayInchs = displayInchs;
-    }
-
     public int getMemoryRom() {
         return memoryRom;
     }
@@ -80,9 +79,7 @@ public class Laptop extends Appliance {
         this.displayInchs = displayInchs;
     }
 
-    public void setDisplayInchs(double displayInchs) {
-        this.displayInchs = displayInchs;
-    }
+
 
     @Override
     public String toString() {
@@ -94,6 +91,26 @@ public class Laptop extends Appliance {
                 ", cpu=" + cpu +
                 ", displayInchs=" + displayInchs +
                 '}';
+    }
+
+    @Override
+    public void setAllFields(HashMap<String,String> map) {
+        for (Map.Entry <String,String>entry:map.entrySet()){
+            String fieldInFileName =entry.getKey();
+            if (fieldInFileName.equals("BATTERY_CAPACITY")){
+                this.setBatteryCapacity(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("OS")){
+                this.setOs(entry.getValue());
+            }else if(fieldInFileName.equals("MEMORY_ROM")){
+                this.setMemoryRom(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("SYSTEM_MEMORY")){
+                this.setSystemMemoryCapacity(Integer.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("CPU")){
+                this.setCpu(Double.valueOf(entry.getValue()));
+            }else if(fieldInFileName.equals("DISPLAY_INCHS")){
+                this.setDisplayInchs(Integer.valueOf(entry.getValue()));
+            }
+        }
     }
 }
 
