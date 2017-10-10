@@ -10,6 +10,9 @@ public class TabletPC extends Appliance {
     private int flashMemoryCapacity;
     private String color;
 
+    public TabletPC() {
+    }
+
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
@@ -63,19 +66,56 @@ public class TabletPC extends Appliance {
 
     @Override
     public void setAllFields(HashMap<String, String> map) {
-        for (Map.Entry <String,String>entry:map.entrySet()){
-            String fieldInFileName =entry.getKey();
-            if (fieldInFileName.equals("BATTERY_CAPACITY")){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String fieldInFileName = entry.getKey();
+            if (fieldInFileName.equals("BATTERY_CAPACITY")) {
                 this.setBatteryCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("DISPLAY_INCHES")){
+            } else if (fieldInFileName.equals("DISPLAY_INCHES")) {
                 this.setDisplayInches(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("MEMORY_ROM")){
+            } else if (fieldInFileName.equals("MEMORY_ROM")) {
                 this.setMemoryRom(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("FLASH_MEMORY_CAPACITY")){
+            } else if (fieldInFileName.equals("FLASH_MEMORY_CAPACITY")) {
                 this.setFlashMemoryCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("COLOR")){
+            } else if (fieldInFileName.equals("COLOR")) {
                 this.setColor(entry.getValue());
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (null == obj) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        TabletPC tabletPC = (TabletPC) obj;
+        if (this.batteryCapacity != tabletPC.batteryCapacity) {
+            return false;
+        }
+        if (this.displayInches != tabletPC.displayInches) {
+            return false;
+        }
+        if (this.memoryRom != tabletPC.memoryRom) {
+            return false;
+        }
+        if (this.flashMemoryCapacity != tabletPC.flashMemoryCapacity) {
+            return false;
+        }
+        if (this.color != tabletPC.color) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int multiplier = 37;
+        return multiplier * (batteryCapacity + displayInches + memoryRom + flashMemoryCapacity) +
+                ((color == null) ? 0 : color.hashCode());
     }
 }

@@ -11,6 +11,9 @@ public class Refrigerator extends Appliance {
     private double height;
     private double width;
 
+    public Refrigerator() {
+    }
+
     public int getPowerConsumption() {
         return powerConsumption;
     }
@@ -71,25 +74,63 @@ public class Refrigerator extends Appliance {
                 '}';
     }
 
-
     @Override
     public void setAllFields(HashMap<String, String> map) {
-        for (Map.Entry <String,String>entry:map.entrySet()){
-            String fieldInFileName =entry.getKey();
-            if (fieldInFileName.equals("POWER_CONSUMPTION")){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String fieldInFileName = entry.getKey();
+            if (fieldInFileName.equals("POWER_CONSUMPTION")) {
                 this.setPowerConsumption(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("WEIGHT")){
+            } else if (fieldInFileName.equals("WEIGHT")) {
                 this.setWeight(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("FREEZER_CAPACITY")){
+            } else if (fieldInFileName.equals("FREEZER_CAPACITY")) {
                 this.setFreezerCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("OVERALL_CAPACITY")){
+            } else if (fieldInFileName.equals("OVERALL_CAPACITY")) {
                 this.setOverallCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("HEIGHT")){
+            } else if (fieldInFileName.equals("HEIGHT")) {
                 this.setHeight(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("WIDTH")){
+            } else if (fieldInFileName.equals("WIDTH")) {
                 this.setWidth(Double.valueOf(entry.getValue()));
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if (null == obj){
+            return false;
+        }
+        if(this.getClass()!=obj.getClass()){
+            return false;
+        }
+        Refrigerator refrigerator = (Refrigerator) obj;
+        if(this.powerConsumption!=refrigerator.powerConsumption){
+            return false;
+        }
+        if(this.weight!=refrigerator.weight){
+            return false;
+        }
+        if(this.freezerCapacity!=refrigerator.freezerCapacity){
+            return false;
+        }
+        if(this.overallCapacity!=refrigerator.overallCapacity){
+            return false;
+        }
+        if(this.height!=refrigerator.height){
+            return false;
+        }
+        if(this.width!=refrigerator.width){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int multiplier = 37;
+        return (int) (multiplier * (powerConsumption + weight + freezerCapacity + overallCapacity + height + width));
     }
 }
 

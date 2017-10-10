@@ -11,6 +11,9 @@ public class Oven extends Appliance {
     private double height;
     private double width;
 
+    public Oven() {
+    }
+
     public double getDepth() {
         return depth;
     }
@@ -43,7 +46,6 @@ public class Oven extends Appliance {
         this.depth = depth;
     }
 
-
     public double getHeight() {
         return height;
     }
@@ -51,7 +53,6 @@ public class Oven extends Appliance {
     public void setHeight(double height) {
         this.height = height;
     }
-
 
 
     public double getWidth() {
@@ -76,25 +77,64 @@ public class Oven extends Appliance {
     }
 
 
-
     @Override
     public void setAllFields(HashMap<String, String> map) {
-        for (Map.Entry <String,String>entry:map.entrySet()){
-            String fieldInFileName =entry.getKey();
-            if (fieldInFileName.equals("POWER_CONSUMPTION")){
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String fieldInFileName = entry.getKey();
+            if (fieldInFileName.equals("POWER_CONSUMPTION")) {
                 this.setPowerConsumption(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("WEIGHT")){
+            } else if (fieldInFileName.equals("WEIGHT")) {
                 this.setWeight(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("CAPACITY")){
+            } else if (fieldInFileName.equals("CAPACITY")) {
                 this.setCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("DEPTH")){
+            } else if (fieldInFileName.equals("DEPTH")) {
                 this.setDepth(Double.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("HEIGHT")){
+            } else if (fieldInFileName.equals("HEIGHT")) {
                 this.setHeight(Double.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("WIDTH")){
+            } else if (fieldInFileName.equals("WIDTH")) {
                 this.setWidth(Double.valueOf(entry.getValue()));
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (null == obj) {
+            return false;
+        }
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        Oven oven = (Oven) obj;
+        if (this.powerConsumption != oven.powerConsumption) {
+            return false;
+        }
+        if (this.weight != oven.weight) {
+            return false;
+        }
+        if (this.capacity != oven.capacity) {
+            return false;
+        }
+        if (this.depth != oven.depth) {
+            return false;
+        }
+        if (this.height != oven.height) {
+            return false;
+        }
+        if (this.width != oven.width) {
+            return false;
+        }
+        return true;
+    }
+
+
+    @Override
+    public int hashCode() {
+        int multiplier = 37;
+        return (int) (multiplier * (powerConsumption + weight + capacity + depth + height + width));
     }
 }
 

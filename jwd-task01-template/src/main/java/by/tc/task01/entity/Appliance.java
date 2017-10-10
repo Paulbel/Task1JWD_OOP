@@ -4,5 +4,5 @@ import java.util.HashMap;
 
 public abstract class Appliance {
     // you may add your own code here
-    abstract public void setAllFields(HashMap <String,String> fieldAndValueMap);
+    abstract public void setAllFields(HashMap<String, String> fieldAndValueMap);
 }

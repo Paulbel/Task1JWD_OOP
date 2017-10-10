@@ -9,8 +9,6 @@ import by.tc.task01.entity.criteria.Criteria;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -42,11 +40,11 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         ApplianceCreateDirector createDirector = new ApplianceCreateDirector();
         CreateCommand command = createDirector.getCommand(applianceType);
         Appliance appliance = command.createAppliance();
-        HashMap<String,String> fieldAndValueMap = new HashMap<String, String>();
+        HashMap<String, String> fieldAndValueMap = new HashMap<String, String>();
         Matcher fieldMatcher = typeNamePattern.matcher(entry);
         if (fieldMatcher.find()) {
             fieldMatcher.usePattern(fieldNameValuePattern);
-            while (fieldMatcher.find()) {//Проверяем следующий критерий
+            while (fieldMatcher.find()) {
                 String fieldName = fieldMatcher.group(fieldNameInPatternIndex);
                 String value = fieldMatcher.group(valueInPatternIndex);
                 fieldAndValueMap.put(fieldName, value);
@@ -64,7 +62,7 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         try {
             fr = new FileReader(FILE_PATH);
             br = new BufferedReader(fr);
-            boolean mayMatch = true;
+            boolean mayMatch;
             boolean alreadyFound = false;
             while (!alreadyFound && ((entryFromFile = br.readLine()) != null)) {//проверяем слудующую строку
                 Matcher applianceMatcher = typeNamePattern.matcher(entryFromFile);
@@ -89,22 +87,20 @@ public class ApplianceDAOImpl implements ApplianceDAO {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         } finally {
             try {
-                if (br != null)
+                if (br != null) {
                     br.close();
-                if (fr != null)
+                }
+                if (fr != null) {
                     fr.close();
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
+                return null;
             }
         }
         return entryFromFile;
     }
 }
-
-// you may add your own code here
-
-
-//you may add your own new classes

@@ -52,9 +52,10 @@ public class Main {
         //////////////////////////////////////////////////////////////////
 
         criteriaTabletPC = new Criteria<TabletPC>();
-        criteriaTabletPC.setApplianceType(null);
-        criteriaTabletPC.add(TabletPC.MEMORY_ROM, 4);
+        criteriaTabletPC.setApplianceType("TabletPC");
+        criteriaTabletPC.add(TabletPC.MEMORY_ROM, 8000);
 
+        //TabletPC : BATTERY_CAPACITY=4, DISPLAY_INCHES=15, MEMORY_ROM=8000, FLASH_MEMORY_CAPACITY=6, COLOR=red;
         appliance = service.find(criteriaTabletPC);
 
         PrintApplianceInfo.print(appliance);

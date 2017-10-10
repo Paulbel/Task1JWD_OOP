@@ -11,6 +11,9 @@ public class Laptop extends Appliance {
     private double cpu;
     private int displayInchs;
 
+    public Laptop() {
+    }
+
     public int getBatteryCapacity() {
         return batteryCapacity;
     }
@@ -79,8 +82,6 @@ public class Laptop extends Appliance {
         this.displayInchs = displayInchs;
     }
 
-
-
     @Override
     public String toString() {
         return "Laptop{" +
@@ -94,23 +95,62 @@ public class Laptop extends Appliance {
     }
 
     @Override
-    public void setAllFields(HashMap<String,String> map) {
-        for (Map.Entry <String,String>entry:map.entrySet()){
-            String fieldInFileName =entry.getKey();
-            if (fieldInFileName.equals("BATTERY_CAPACITY")){
+    public void setAllFields(HashMap<String, String> map) {
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String fieldInFileName = entry.getKey();
+            if (fieldInFileName.equals("BATTERY_CAPACITY")) {
                 this.setBatteryCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("OS")){
+            } else if (fieldInFileName.equals("OS")) {
                 this.setOs(entry.getValue());
-            }else if(fieldInFileName.equals("MEMORY_ROM")){
+            } else if (fieldInFileName.equals("MEMORY_ROM")) {
                 this.setMemoryRom(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("SYSTEM_MEMORY")){
+            } else if (fieldInFileName.equals("SYSTEM_MEMORY")) {
                 this.setSystemMemoryCapacity(Integer.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("CPU")){
+            } else if (fieldInFileName.equals("CPU")) {
                 this.setCpu(Double.valueOf(entry.getValue()));
-            }else if(fieldInFileName.equals("DISPLAY_INCHS")){
+            } else if (fieldInFileName.equals("DISPLAY_INCHS")) {
                 this.setDisplayInchs(Integer.valueOf(entry.getValue()));
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if (null == obj){
+            return false;
+        }
+        if(this.getClass()!=obj.getClass()){
+            return false;
+        }
+        Laptop laptop = (Laptop)obj;
+        if(this.batteryCapacity!=laptop.batteryCapacity){
+            return false;
+        }
+        if(this.os!=laptop.os){
+            return false;
+        }
+        if(this.memoryRom!=laptop.memoryRom){
+            return false;
+        }
+        if(this.systemMemory!=laptop.systemMemory){
+            return false;
+        }
+        if(this.cpu!=laptop.cpu){
+            return false;
+        }
+        if(this.displayInchs!=laptop.displayInchs){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int multiplier = 37;
+        return (int) (multiplier * (batteryCapacity + memoryRom + systemMemory + cpu + displayInchs) + ((os == null) ? 0 : os.hashCode()));
     }
 }
 
