@@ -96,32 +96,32 @@ public class Refrigerator extends Appliance {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj){
+        if (this == obj) {
             return true;
         }
-        if (null == obj){
+        if (null == obj) {
             return false;
         }
-        if(this.getClass()!=obj.getClass()){
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
         Refrigerator refrigerator = (Refrigerator) obj;
-        if(this.powerConsumption!=refrigerator.powerConsumption){
+        if (this.powerConsumption != refrigerator.powerConsumption) {
             return false;
         }
-        if(this.weight!=refrigerator.weight){
+        if (this.weight != refrigerator.weight) {
             return false;
         }
-        if(this.freezerCapacity!=refrigerator.freezerCapacity){
+        if (this.freezerCapacity != refrigerator.freezerCapacity) {
             return false;
         }
-        if(this.overallCapacity!=refrigerator.overallCapacity){
+        if (this.overallCapacity != refrigerator.overallCapacity) {
             return false;
         }
-        if(this.height!=refrigerator.height){
+        if (this.height != refrigerator.height) {
             return false;
         }
-        if(this.width!=refrigerator.width){
+        if (this.width != refrigerator.width) {
             return false;
         }
         return true;

@@ -5,9 +5,9 @@ import by.tc.task01.entity.Appliance;
 public class PrintApplianceInfo {
 
     public static void print(Appliance appliance) {
-        if(appliance!=null){
+        if (appliance != null) {
             System.out.println(appliance);
-        }else {
+        } else {
             System.out.println("Something is wrong!");
         }
     }

@@ -12,8 +12,9 @@ import java.util.regex.Pattern;
  */
 public abstract class CriteriaValidator {
 
-    protected HashMap <String, Pattern>  patterns;
-    protected CriteriaValidator(){
+    protected HashMap<String, Pattern> patterns;
+
+    protected CriteriaValidator() {
         this.patterns = new HashMap<String, Pattern>();
     }
 
@@ -23,26 +24,24 @@ public abstract class CriteriaValidator {
                 Pattern pattern = patterns.get(entry.getKey().toString());
                 Matcher matcher = pattern.matcher(String.valueOf(entry.getValue()));
                 if (!matcher.matches()) {
-                    System.out.println("BadParams");
                     return false;
                 }
             }
         } catch (NullPointerException ex) {
-            System.out.println("BADPARAMS NULL");
             return false;
         }
         return true;
     }
 
-    protected void putIntCriteriaFieldValidator(String fieldName){
+    protected void putIntCriteriaFieldValidator(String fieldName) {
         patterns.put(fieldName, ValidatorConstants.validateIntPattern);
     }
 
-    protected void putDoubleCriteriaFieldValidator(String fieldName){
+    protected void putDoubleCriteriaFieldValidator(String fieldName) {
         patterns.put(fieldName, ValidatorConstants.validateDoublePattern);
     }
 
-    protected void putStringCriteriaValidator(String fieldName){
+    protected void putStringCriteriaValidator(String fieldName) {
         patterns.put(fieldName, ValidatorConstants.validateStringPattern);
     }
 

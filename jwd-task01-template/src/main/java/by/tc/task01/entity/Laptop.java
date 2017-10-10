@@ -116,32 +116,32 @@ public class Laptop extends Appliance {
 
     @Override
     public boolean equals(Object obj) {
-        if(this == obj){
+        if (this == obj) {
             return true;
         }
-        if (null == obj){
+        if (null == obj) {
             return false;
         }
-        if(this.getClass()!=obj.getClass()){
+        if (this.getClass() != obj.getClass()) {
             return false;
         }
-        Laptop laptop = (Laptop)obj;
-        if(this.batteryCapacity!=laptop.batteryCapacity){
+        Laptop laptop = (Laptop) obj;
+        if (this.batteryCapacity != laptop.batteryCapacity) {
             return false;
         }
-        if(this.os!=laptop.os){
+        if (this.os != laptop.os) {
             return false;
         }
-        if(this.memoryRom!=laptop.memoryRom){
+        if (this.memoryRom != laptop.memoryRom) {
             return false;
         }
-        if(this.systemMemory!=laptop.systemMemory){
+        if (this.systemMemory != laptop.systemMemory) {
             return false;
         }
-        if(this.cpu!=laptop.cpu){
+        if (this.cpu != laptop.cpu) {
             return false;
         }
-        if(this.displayInchs!=laptop.displayInchs){
+        if (this.displayInchs != laptop.displayInchs) {
             return false;
         }
         return true;

@@ -2,7 +2,7 @@ package by.tc.task01.service.validation;
 
 import by.tc.task01.entity.criteria.Criteria;
 import by.tc.task01.service.validation.validators.CriteriaValidator;
-import by.tc.task01.service.validation.validators.CriteriaValitators.CriteriaValidateDirector;
+import by.tc.task01.service.validation.validators.CriteriaValidateDirector;
 
 public class Validator {
     public static <E> boolean criteriaValidator(Criteria<E> criteria) {
