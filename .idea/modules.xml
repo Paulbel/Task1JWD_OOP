@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/JWD_Task01_OOP-master.iml" filepath="$PROJECT_DIR$/.idea/JWD_Task01_OOP-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jwd-task01-template/jwd-task01-template.iml" filepath="$PROJECT_DIR$/jwd-task01-template/jwd-task01-template.iml" />
     </modules>
   </component>
 </project>
