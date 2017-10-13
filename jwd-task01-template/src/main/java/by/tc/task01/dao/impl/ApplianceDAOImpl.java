@@ -62,28 +62,24 @@ public class ApplianceDAOImpl implements ApplianceDAO {
         try {
             fr = new FileReader(FILE_PATH);
             br = new BufferedReader(fr);
-            boolean mayMatch;
-            boolean alreadyFound = false;
-            while (!alreadyFound && ((entryFromFile = br.readLine()) != null)) {//проверяем слудующую строку
+            Outer:
+            while (((entryFromFile = br.readLine()) != null)) {//проверяем слудующую строку
                 Matcher applianceMatcher = typeNamePattern.matcher(entryFromFile);
-                mayMatch = true;
                 if (applianceMatcher.find()) {
                     applianceMatcher.usePattern(fieldNameValuePattern);
-                    while (mayMatch && applianceMatcher.find()) {//Проверяем следующий критерий
+                    while (applianceMatcher.find()) {//Проверяем следующий критерий
                         for (Map.Entry<E, Object> entry : criteria.getCriteria().entrySet()) {
                             E key = entry.getKey();
                             Object value = entry.getValue();
                             if (key.toString().equals(applianceMatcher.group(fieldNameInPatternIndex))) {
-                                if (value.toString().equals(applianceMatcher.group(valueInPatternIndex))) {
-                                    alreadyFound = true;
-                                } else {
-                                    mayMatch = false;
-                                    alreadyFound = false;
-                                    break;
+                                if (!value.toString().equals(applianceMatcher.group(valueInPatternIndex))) {
+                                    continue Outer;
                                 }
                             }
                         }
+
                     }
+                    break Outer;
                 }
             }
         } catch (IOException e) {
