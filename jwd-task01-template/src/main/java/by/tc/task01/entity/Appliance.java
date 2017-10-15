@@ -1,5 +1,7 @@
 package by.tc.task01.entity;
 
-public class Appliance {
-	// you may add your own code here
+import java.util.HashMap;
+
+public abstract class Appliance {
+    abstract public void setAllFields(HashMap<String, String> fieldAndValueMap);
 }
